@@ -16,34 +16,40 @@ class OverlayService : Service() {
 
     override fun onCreate() {
         super.onCreate()
+        try {
+            windowManager = getSystemService(WINDOW_SERVICE) as WindowManager
 
-        windowManager = getSystemService(WINDOW_SERVICE) as WindowManager
+            webView = WebView(this).apply {
+                settings.javaScriptEnabled = true
+                settings.domStorageEnabled = true
+                loadUrl("file:///android_asset/pet.html")
+            }
 
-        webView = WebView(this).apply {
-            settings.javaScriptEnabled = true
-            settings.domStorageEnabled = true
-            loadUrl("file:///android_asset/pet.html")
+            val params = WindowManager.LayoutParams(
+                300,
+                300,
+                WindowManager.LayoutParams.TYPE_APPLICATION_OVERLAY,
+                WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE,
+                PixelFormat.TRANSLUCENT
+            ).apply {
+                gravity = Gravity.TOP or Gravity.START
+                x = 100
+                y = 100
+            }
+
+            windowManager?.addView(webView, params)
+        } catch (e: Exception) {
+            stopSelf()
         }
-
-        val params = WindowManager.LayoutParams(
-            300,
-            300,
-            WindowManager.LayoutParams.TYPE_APPLICATION_OVERLAY,
-            WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE,
-            PixelFormat.TRANSLUCENT
-        ).apply {
-            gravity = Gravity.TOP or Gravity.START
-            x = 100
-            y = 100
-        }
-
-        windowManager?.addView(webView, params)
     }
 
     override fun onDestroy() {
         super.onDestroy()
-        webView?.let {
-            windowManager?.removeView(it)
+        try {
+            webView?.let {
+                windowManager?.removeView(it)
+            }
+        } catch (e: Exception) {
         }
         webView = null
     }
