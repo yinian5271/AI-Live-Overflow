@@ -9,7 +9,6 @@ body {
   margin: 0;
   padding: 0;
   background: transparent;
-  background-color: transparent;
   overflow: hidden;
   user-select: none;
   -webkit-user-select: none;
@@ -166,9 +165,6 @@ function fetchPetState() {
       const data = window.PetBridge.getPetState();
       const state = JSON.parse(data);
       if (state.mood) setMood(state.mood);
-      if (state.connected) {
-        showSpeech(state.greeting || '哥哥在');
-      }
       return state;
     } catch(e) {
       console.log('PetBridge error:', e);
@@ -360,11 +356,6 @@ setInterval(() => {
 }, 5000);
 
 // ========== 从 PetBridge 获取初始化数据 ============
-// 点击响应（原生桥通知）
-function onPetTap() {
-  petEngine.onTap();
-}
-
 fetchPetState();
 
 // Initial wake-up animation

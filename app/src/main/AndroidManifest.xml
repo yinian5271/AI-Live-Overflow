@@ -3,12 +3,9 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.ly.pet">
 
-    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
-
     <application
         android:allowBackup="true"
-        android:label="祁煜桌宠"
-        android:theme="@android:style/Theme.Material.Light.NoActionBar">
+        android:label="桌宠">
         
         <activity 
             android:name="com.ly.pet.PetActivity"
@@ -18,10 +15,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
-        <service 
-            android:name="com.ly.pet.OverlayService"
-            android:exported="false" />
             
     </application>
 </manifest>
+
+
