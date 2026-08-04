@@ -2,9 +2,11 @@ package com.ly.pet
 
 import android.app.Service
 import android.content.Intent
+import android.graphics.Color
 import android.graphics.PixelFormat
 import android.os.IBinder
 import android.view.Gravity
+import android.view.View
 import android.view.WindowManager
 import android.webkit.WebView
 
@@ -20,21 +22,22 @@ class OverlayService : Service() {
             windowManager = getSystemService(WINDOW_SERVICE) as WindowManager
 
             webView = WebView(this).apply {
+                setBackgroundColor(Color.TRANSPARENT)
                 settings.javaScriptEnabled = true
                 settings.domStorageEnabled = true
                 loadUrl("file:///android_asset/pet.html")
             }
 
             val params = WindowManager.LayoutParams(
-                300,
-                300,
+                400,
+                500,
                 WindowManager.LayoutParams.TYPE_APPLICATION_OVERLAY,
                 WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE,
                 PixelFormat.TRANSLUCENT
             ).apply {
                 gravity = Gravity.TOP or Gravity.START
-                x = 100
-                y = 100
+                x = 50
+                y = 50
             }
 
             windowManager?.addView(webView, params)
